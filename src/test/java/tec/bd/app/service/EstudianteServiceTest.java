@@ -62,10 +62,20 @@ public class EstudianteServiceTest {
     @Test
     public void deleteStudent() throws Exception {
 
+        long carne = 2020;
+        estudianteService.deleteStudent(carne);
+
+        var estudiantes = this.estudianteService.getAll();
+        assertThat(estudiantes).hasSize(3);
     }
 
     @Test
     public void updateStudent() throws Exception {
+
+        var estudiante = new Estudiante(2020, "Federico","Peluche",45);
+        estudianteService.updateStudent(estudiante);
+        var estudiantes = this.estudianteService.getAll();
+        assertThat(estudiantes).hasSize(3);
 
     }
 

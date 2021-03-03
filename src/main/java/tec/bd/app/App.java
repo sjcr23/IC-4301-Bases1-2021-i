@@ -11,9 +11,9 @@ public class App  {
 
 
     public static EstudianteService init() {
-        var juan = new Estudiante(1L, "Juan", "Perez", 20);
-        var maria = new Estudiante(2L, "Maria", "Rojas", 21);
-        var pedro = new Estudiante(3L, "Pedro", "Infante", 23);
+        var juan = new Estudiante(2020L, "Joana", "Perez", 20);
+        var maria = new Estudiante(2021L, "Maria", "Rojas", 21);
+        var pedro = new Estudiante(2019L, "Pedro", "Infante", 23);
 
         var database = new SetDB(new HashSet<>() {{
             add(juan);
