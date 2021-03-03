@@ -1,4 +1,4 @@
-##[IS2021][BASES-1][Tarea1][Mi-TEC-Digital]
+## [IS2021][BASES-1][Tarea1][Mi-TEC-Digital]
 ==========================================
 
 **Descripción:**  
