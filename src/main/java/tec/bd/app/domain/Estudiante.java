@@ -1,24 +1,24 @@
 package tec.bd.app.domain;
 
-public class Estudiante {
+public class Estudiante implements Entity {
 
-    private long carne;
+    private int carne;
     private String nombre;
     private String apellido;
     private int edad;
 
-    public Estudiante(long carne, String nombre, String apellido, int edad) {
+    public Estudiante(int carne, String nombre, String apellido, int edad) {
         this.carne = carne;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
     }
 
-    public long getCarne() {
+    public int getCarne() {
         return carne;
     }
 
-    public void setCarne(long carne) {
+    public void setCarne(int carne) {
         this.carne = carne;
     }
 
@@ -44,5 +44,9 @@ public class Estudiante {
 
     public void setEdad(int edad) {
         this.edad = edad;
+    }
+
+    public static int compareByLastname(Estudiante estudiante, Estudiante estudiante1) {
+        return 0;
     }
 }
