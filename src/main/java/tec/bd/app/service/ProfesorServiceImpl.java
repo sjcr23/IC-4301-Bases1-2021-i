@@ -2,6 +2,8 @@ package tec.bd.app.service;
 
 import tec.bd.app.dao.ProfesorDAO;
 import tec.bd.app.domain.Profesor;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,7 +72,7 @@ public class ProfesorServiceImpl implements ProfesorService{
             return this.profesorDAO.findByCity(ciudad);
         }
         else{
-            return null;
+            return Collections.emptyList();
         }
     }
 }

@@ -260,7 +260,7 @@ public class App  {
 
             } else if(cmd.hasOption("cu")) {
                 // Actualizar datos de un curso
-                var newCurseValues = cmd.getOptionValues("eu");
+                var newCurseValues = cmd.getOptionValues("cu");
                 updateCurse(cursoService,
                         Integer.parseInt(newCurseValues[0]),
                         newCurseValues[1],
@@ -303,6 +303,7 @@ public class App  {
                 // Borrar/remover un profesor
                 var indice  = cmd.getOptionValue("pd");
                 deleteProffesor(profesorService, Integer.parseInt(indice));
+                showAllProffesors(profesorService);
 
             } else if(cmd.hasOption("pu")) {
                 // Actualizar datos de un profesor
@@ -316,7 +317,7 @@ public class App  {
 
             } else if(cmd.hasOption("prc")) {
                 // Ver profesores por ciudad
-                var ciudad = cmd.getOptionValue("crd");
+                var ciudad = cmd.getOptionValue("prc");
                 showProffesorByCity(profesorService,ciudad);
 
             } else if(cmd.hasOption("h")) {
@@ -505,6 +506,17 @@ public class App  {
     }
 
     public static void showProffesorByCity(ProfesorService profesorService, String ciudad) {
-        profesorService.findByCity(ciudad);
+
+        var profes = profesorService.findByCity(ciudad);
+        System.out.println("\n\n");
+        System.out.println("Lista de Profesores");
+        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("ID\t\tNombre\t\tApellidos\t\tCiudad");
+        System.out.println("-----------------------------------------------------------------------");
+        for(Profesor profesor : profes) {
+            System.out.println(profesor.getId() + "\t\t" + profesor.getNombre() + "\t\t" + profesor.getApellido() + "\t\t"+ profesor.getCiudad());
+        }
+        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("\n\n");
     }
 }

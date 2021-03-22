@@ -92,6 +92,8 @@ public class EstudianteServiceImplTest {
                 List.of(mock(Estudiante.class), mock(Estudiante.class))
         );
 
+        given(this.estudianteDAO.findById(anyInt())).willReturn(Optional.of(mock(Estudiante.class)));
+
         var studentsBeforeSave = this.estudianteService.getAll();
 
         estudianteService.deleteStudent(2);
@@ -127,13 +129,11 @@ public class EstudianteServiceImplTest {
     @Test
     public void getStudentsSortedByLastName() throws Exception {
         //TODO: hay que implementarlo
-        this.estudianteDAO.findAllSortByLastName();
     }
 
     @Test
-    public void getStudentsByLastName(String apellido) throws Exception {
+    public void getStudentsByLastName() throws Exception {
         //TODO: hay que implementarlo
-        this.estudianteDAO.findByLastName(apellido);
     }
 
 }

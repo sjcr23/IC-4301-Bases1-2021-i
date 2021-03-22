@@ -107,7 +107,7 @@ public class ApplicationContext {
         var profe1Id = new RowAttribute("id", 1);
         var profe1Nombre = new RowAttribute("nombre", "Aurelio");
         var profe1Creditos = new RowAttribute("apellido", "Sanabri");
-        var profe1Departamento = new RowAttribute("ciudad", "LaCangreja");
+        var profe1Departamento = new RowAttribute("ciudad", "Cartago");
         var profe1Row = new Row(new RowAttribute[]{ profe1Id, profe1Nombre, profe1Creditos, profe1Departamento });
 
         var profe2ID = new RowAttribute("id", 2);
@@ -145,7 +145,8 @@ public class ApplicationContext {
 
         }})
 
-        ;tables.put(Profesor.class, new HashSet<>() {{
+        ;
+        tables.put(Profesor.class, new HashSet<>() {{
             add(profe1Row);
             add(profe2Row);
             add(profe3Row);

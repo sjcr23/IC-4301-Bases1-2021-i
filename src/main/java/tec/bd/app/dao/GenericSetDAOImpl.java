@@ -56,11 +56,6 @@ public abstract class GenericSetDAOImpl<T, ID extends Serializable> implements G
         return this.table.stream().filter(row -> row.attribute("id").getValue().equals(id)).findFirst();
     }
 
-
-    //protected Optional<Row> findRowByCity(String ciudad) {
-      //  return this.table.stream().filter(row -> row.attribute("ciudad").getValue().equals(ciudad)).findAny();
-    //}
-
     protected abstract T rowToEntity(Row row);
 
     protected abstract Row entityToRow(T e);

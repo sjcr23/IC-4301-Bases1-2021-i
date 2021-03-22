@@ -4,10 +4,10 @@ import tec.bd.app.database.set.Row;
 import tec.bd.app.database.set.RowAttribute;
 import tec.bd.app.database.set.SetDB;
 
-import tec.bd.app.domain.Curso;
 import tec.bd.app.domain.Profesor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,19 +20,21 @@ public class ProfesorDAOImpl  extends  GenericSetDAOImpl<Profesor, Integer> impl
     @Override
     public List<Profesor> findByCity(String ciudad) {
 
-        /* -> Recolectamos en "estudiantes" la lista de estudiantes que exista.
-         * -> Creamos un array para almacenar la lista de los distintos estudiantes con ese Apellido
-         * -> Recorremos el List para preguntar si existen coincidencias de apellido, si lo hay, rellenamos el array.
-         * -> Cuando el ciclo termine, retornames el array.
-         */
         var profesores =  this.table.stream().map(this::rowToEntity).collect(Collectors.toList());
+
         ArrayList<Profesor> listaPorCiudad = new ArrayList<>();
+
         for (Profesor actual : profesores) {
             if (actual.getCiudad().equals(ciudad)) {
                 listaPorCiudad.add(actual);
             }
         }
-        return listaPorCiudad.stream().collect(Collectors.toList());
+        if (listaPorCiudad.isEmpty()){
+            return Collections.emptyList();
+        }
+        else{
+            return listaPorCiudad.stream().collect(Collectors.toList());
+        }
     }
 
     @Override

@@ -45,12 +45,12 @@ public class CursoServiceImpl implements  CursoService{
     public Optional<Curso> updateCurse(Curso e) {
 
         //TODO: validar que el ID exista en la BD. Si existe se actualiza
-
-        if(e.getId() == this.cursoDAO.findById(e.getId()).get().getId()){
+        var id = this.cursoDAO.findById(e.getId()).get().getId();
+        if(e.getId() == id){
             return this.cursoDAO.update(e);
         }
         else{
-            return null;
+             return Optional.empty();
         }
     }
 

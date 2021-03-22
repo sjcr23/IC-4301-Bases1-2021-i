@@ -17,7 +17,7 @@ public class SetDBTest {
         Set<Row> estudianteTable = mock(Set.class);
         SetDB setDB = new SetDB(Map.of(Estudiante.class, estudianteTable));
 
-        //Para probar esto se puede pasar un clase que se sabe que no es suportada por el metodo
+        // Para probar esto se puede pasar un clase que se sabe que no es suportada por el metodo
         var actual = setDB.getTableByClassName(HashSet.class);
 
         assertThat(actual).isEmpty();

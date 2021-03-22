@@ -8,6 +8,7 @@ import tec.bd.app.database.set.SetDB;
 import tec.bd.app.domain.Entity;
 import tec.bd.app.domain.Estudiante;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -47,6 +48,16 @@ public class EstudianteDAOImplTest {
         }});
         var setDB = new SetDB(tables);
         this.estudianteDAO = new EstudianteDAOImpl(setDB, Estudiante.class);
+    }
+
+    @Test
+    public void orderByLastName() throws Exception {
+
+        var estudiantes = this.estudianteDAO.findAll();
+        Comparator<Estudiante> comparator
+                = (e1, e2) -> e1.getApellido().compareTo(e2.getApellido());
+
+        estudiantes.sort(comparator);
     }
 
     @Test
@@ -94,16 +105,4 @@ public class EstudianteDAOImplTest {
         this.estudianteDAO.delete(2);
         assertThat(this.estudianteDAO.findAll()).hasSize(2);
     }
-
-    @Test
-    public void findByLastName() throws Exception {
-        //TODO: hay que implementarlo
-    }
-
-    @Test
-    public void findAllSortedByLastName() throws Exception {
-        //TODO: hay que implementarlo
-    }
-
-
 }

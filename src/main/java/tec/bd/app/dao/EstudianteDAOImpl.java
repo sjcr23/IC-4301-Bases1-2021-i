@@ -9,7 +9,7 @@ import tec.bd.app.domain.Estudiante;
 import java.util.*;
 
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 
 public class EstudianteDAOImpl extends GenericSetDAOImpl<Estudiante, Integer> implements EstudianteDAO {
@@ -21,12 +21,6 @@ public class EstudianteDAOImpl extends GenericSetDAOImpl<Estudiante, Integer> im
     @Override
     public List<Estudiante> findByLastName(String apellido) {
 
-        /* -> Recolectamos en "estudiantes" la lista de estudiantes que exista.
-         * -> Creamos un array para almacenar la lista de los distintos estudiantes con ese Apellido
-         * -> Recorremos el List para preguntar si existen coincidencias de apellido, si lo hay, rellenamos el array.
-         * -> Cuando el ciclo termine, retornames el array.
-         */
-
         var estudiantes =  this.table.stream().map(this::rowToEntity).collect(Collectors.toList());
         ArrayList<Estudiante> listaPorApellidos = new ArrayList<>();
         for (Estudiante actual : estudiantes) {
@@ -34,47 +28,26 @@ public class EstudianteDAOImpl extends GenericSetDAOImpl<Estudiante, Integer> im
                 listaPorApellidos.add(actual);
             }
         }
-        return listaPorApellidos.stream().collect(Collectors.toList());
+
+        if (estudiantes.isEmpty()){
+            return Collections.emptyList();
+        }
+        else {
+            return listaPorApellidos.stream().collect(Collectors.toList());
+        }
     }
     @Override
     public List<Estudiante> findAllSortByLastName() {
 
         List<Estudiante> estudiantes = this.table.stream().map(this::rowToEntity).collect(Collectors.toList());
-        return quicksort(estudiantes);
+
+        Comparator<Estudiante> comparator = (e1, e2) -> e1.getApellido().compareTo(e2.getApellido());
+
+        estudiantes.sort(comparator);
+
+        return estudiantes;
     }
 
-    @Override
-    public List<Estudiante> quicksort(List<Estudiante> lista) {
-
-        ArrayList<Estudiante> menores = new ArrayList<>();
-        ArrayList<Estudiante> iguales = new ArrayList<>();
-        ArrayList<Estudiante> mayores = new ArrayList<>();
-
-        Estudiante pivote = lista.get(0);
-
-        //Condicion de Parada
-        if (lista.size() <=1 ){
-            //return retornable.stream().collect(Collectors.toList());
-            return null;
-        }
-
-        for (Estudiante actual:lista){
-            // E
-            if(actual.getApellido().compareTo(pivote.getApellido()) < 0){
-                menores.add(actual);
-            }
-            else if (actual.getApellido().compareTo(pivote.getApellido())  > 0){
-                mayores.add(actual);
-            }
-            else{
-                iguales.add(actual);
-            }
-        }
-
-       //Stream.concat(quicksort(menores).stream(),iguales.stream(),quicksort(mayores).stream()).collect(Collectors.toList());
-
-        return null;
-    }
 
     @Override
     protected Estudiante rowToEntity(Row row) {
