@@ -1,6 +1,12 @@
 package tec.bd.app;
 
-import tec.bd.app.dao.*;
+import tec.bd.app.dao.CursoDAO;
+import tec.bd.app.dao.EstudianteDAO;
+import tec.bd.app.dao.ProfesorDAO;
+import tec.bd.app.dao.mysql.CursoMySqlDAOImpl;
+import tec.bd.app.dao.mysql.EstudianteMySqlDAOImpl;
+import tec.bd.app.dao.mysql.ProfesorMySqlDAOImpl;
+import tec.bd.app.database.mysql.DBProperties;
 import tec.bd.app.database.set.Row;
 import tec.bd.app.database.set.RowAttribute;
 import tec.bd.app.database.set.SetDB;
@@ -10,22 +16,35 @@ import tec.bd.app.domain.Estudiante;
 import tec.bd.app.domain.Profesor;
 import tec.bd.app.service.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 public class ApplicationContext {
 
     private SetDB setDB;
-    private EstudianteDAO estudianteSetDAO;
-    private EstudianteService estudianteServiceSet;
+    private EstudianteDAO estudianteDAO;
+    private EstudianteService estudianteService;
 
-    private CursoDAO cursoSetDAO;
+    private CursoDAO cursoDAO;
     private CursoService cursoService;
 
-    private ProfesorDAO profesorSetDAO;
-    private ProfesorService profesorServiceSet;
+    private ProfesorDAO profesorDAO;
+    private ProfesorService profesorService;
 
+    private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/universidad";
+    private static final String DB_USERNAME = "root";
+    private static final String DB_PASSWORD = "chino";
+    private static final DBProperties DB_PROPERTIES = new DBProperties(CONNECTION_STRING, DB_USERNAME, DB_PASSWORD);
+
+    private static final String DATABASE_PROPERTIES_FILE = "/database.properties";
+    private static final String CONNECTION_STRING_PROP = "database.url";
+    private static final String DB_USERNAME_PROP = "database.username";
+    private static final String DB_PASSWORD_PROP = "database.password";
 
     private ApplicationContext() {
 
@@ -33,13 +52,18 @@ public class ApplicationContext {
 
     public static ApplicationContext init() {
         ApplicationContext applicationContext = new ApplicationContext();
-        applicationContext.setDB = initSetDB();
-        applicationContext.estudianteSetDAO = initEstudianteSetDAO(applicationContext.setDB);
-        applicationContext.estudianteServiceSet = initEstudianteSetService(applicationContext.estudianteSetDAO);
-        applicationContext.cursoSetDAO = initCursoSetDAO(applicationContext.setDB);
-        applicationContext.cursoService = initCursoService(applicationContext.cursoSetDAO);
-        applicationContext.profesorSetDAO = initProfesorSetDAO(applicationContext.setDB);
-        applicationContext.profesorServiceSet = initProfesorServiceSet(applicationContext.profesorSetDAO);
+
+        // Objetos que se conectan a MySQL
+        String dbPropertiesFilePath = applicationContext.getClass().getResource(DATABASE_PROPERTIES_FILE).getFile();
+        DBProperties databaseProperties = initDBProperties(dbPropertiesFilePath);
+
+        applicationContext.estudianteDAO = initEstudianteMysqlDAO(databaseProperties);
+        applicationContext.cursoDAO = initCursoMysqlDAO(databaseProperties);
+        applicationContext.profesorDAO = initProfesorMysqlDAO(databaseProperties);
+
+        applicationContext.estudianteService = initEstudianteService(applicationContext.estudianteDAO);
+        applicationContext.cursoService = initCursoService(applicationContext.cursoDAO);
+        applicationContext.profesorService = initProfesorService(applicationContext.profesorDAO);
         return applicationContext;
     }
 
@@ -160,55 +184,76 @@ public class ApplicationContext {
         return new SetDB(tables);
     }
 
-    private static EstudianteDAO initEstudianteSetDAO(SetDB setDB) {
-        return new EstudianteDAOImpl(setDB, Estudiante.class);
+    private static DBProperties initDBProperties(String dbPropertiesFilePath) {
+        try (InputStream propFileStream = new FileInputStream(dbPropertiesFilePath)) {
+            Properties properties = new Properties();
+            properties.load(propFileStream);
+            return new DBProperties(
+                    properties.getProperty(CONNECTION_STRING_PROP),
+                    properties.getProperty(DB_USERNAME_PROP),
+                    properties.getProperty(DB_PASSWORD_PROP)
+            );
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException("No se puede cargar el archivo de propiedades de la base de datos");
+        }
     }
 
-    private static EstudianteService initEstudianteSetService(EstudianteDAO estudianteDAO) {
+    // Clases
+
+    private static EstudianteDAO initEstudianteMysqlDAO(DBProperties dbProperties) {
+        return new EstudianteMySqlDAOImpl(dbProperties);
+    }
+
+    private static CursoDAO initCursoMysqlDAO(DBProperties dbProperties) {
+        return new CursoMySqlDAOImpl(dbProperties);
+    }
+
+    private static ProfesorDAO initProfesorMysqlDAO(DBProperties dbProperties) {
+        return new ProfesorMySqlDAOImpl(dbProperties);
+    }
+
+    //   Servicios
+
+    private static EstudianteService initEstudianteService(EstudianteDAO estudianteDAO) {
         return new EstudianteServiceImpl(estudianteDAO);
     }
 
-    private static CursoDAO initCursoSetDAO(SetDB setDB){
-        return new CursoDAOImpl(setDB, Curso.class);
+    private static ProfesorService initProfesorService(ProfesorDAO profesorDAO){
+        return new ProfesorServiceImpl(profesorDAO);
     }
 
     private static CursoService initCursoService(CursoDAO cursoDAO){
         return new CursoServiceImpl(cursoDAO);
     }
 
-    private static ProfesorDAO initProfesorSetDAO(SetDB setDB){
-        return new ProfesorDAOImpl(setDB, Profesor.class);
-    }
-
-    private static ProfesorService initProfesorServiceSet(ProfesorDAO profesorDAO){
-        return new ProfesorServiceImpl(profesorDAO);
-    }
+//    private static EstudianteDAO initEstudianteSetDAO(SetDB setDB) {
+//        return new EstudianteDAOImpl(setDB, Estudiante.class);
+//    }
+//    private static ProfesorDAO initProfesorSetDAO(SetDB setDB){
+//        return new ProfesorDAOImpl(setDB, Profesor.class);
+//    }
+//    private static CursoDAO initCursoSetDAO(SetDB setDB){
+//        return new CursoDAOImpl(setDB, Curso.class);
+//    }
 
     public SetDB getSetDB() {
         return this.setDB;
     }
 
     public EstudianteDAO getEstudianteSetDAO() {
-        return this.estudianteSetDAO;
+        return this.estudianteDAO;
     }
 
-    public EstudianteService getEstudianteServiceSet() {
-        return this.estudianteServiceSet;
-    }
-
-    public CursoDAO getCursoSetDAO() {
-        return this.cursoSetDAO;
+    public EstudianteService getEstudianteService() {
+        return this.estudianteService;
     }
 
     public CursoService getCursoService() {
         return this.cursoService;
     }
 
-    public ProfesorDAO getProfesorSetDAO() {
-        return this.profesorSetDAO;
-    }
-
-    public ProfesorService getProfesorServiceSet() {
-        return this.profesorServiceSet;
+    public ProfesorService getProfesorService() {
+        return this.profesorService;
     }
 }

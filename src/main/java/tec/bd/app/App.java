@@ -9,20 +9,18 @@ import tec.bd.app.domain.Profesor;
 import tec.bd.app.service.CursoService;
 import tec.bd.app.service.EstudianteService;
 import tec.bd.app.service.ProfesorService;
-
 import java.util.Optional;
 
 public class App  {
 
     private static final Logger LOG = LoggerFactory.getLogger(App.class);
 
-
     public static void main(String[] args) throws Exception {
 
         ApplicationContext applicationContext = ApplicationContext.init();
-        var estudianteService = applicationContext.getEstudianteServiceSet();
+        var estudianteService = applicationContext.getEstudianteService();
         var cursoService = applicationContext.getCursoService();
-        var profesorService = applicationContext.getProfesorServiceSet();
+        var profesorService = applicationContext.getProfesorService();
 
         Options options = new Options();
 
@@ -199,7 +197,8 @@ public class App  {
                         Integer.parseInt(newStudentValues[0]),
                         newStudentValues[1],
                         newStudentValues[2],
-                        Integer.parseInt(newStudentValues[3]));
+                        newStudentValues[3],
+                        Integer.parseInt(newStudentValues[4]));
                 showAllStudents(estudianteService);
             } else if(cmd.hasOption("ed")) {
                 // Borrar/remover un estudiante
@@ -213,7 +212,8 @@ public class App  {
                         Integer.parseInt(newStudentValues[0]),
                         newStudentValues[1],
                         newStudentValues[2],
-                        Integer.parseInt(newStudentValues[3]));
+                        newStudentValues[3],
+                        Integer.parseInt(newStudentValues[4]));
                 showAllStudents(estudianteService);
 
             } else if(cmd.hasOption("erln")) {
@@ -345,10 +345,10 @@ public class App  {
         System.out.println("\n\n");
         System.out.println("Lista de Estudiantes");
         System.out.println("-----------------------------------------------------------------------");
-        System.out.println("Carne\t\tNombre\t\tApellido\tEdad");
+        System.out.println("Carne\t\tNombre\t\tApellido");
         System.out.println("-----------------------------------------------------------------------");
         for(Estudiante estudiante : estudianteService.getAll()) {
-            System.out.println(estudiante.getCarne() + "\t\t" + estudiante.getNombre() + "\t\t" +estudiante.getApellido() + "\t\t"+ estudiante.getEdad());
+            System.out.println(estudiante.getId() + "\t\t" + estudiante.getNombre() + "\t\t" +estudiante.getApellido());
         }
         System.out.println("-----------------------------------------------------------------------");
         System.out.println("\n\n");
@@ -358,14 +358,14 @@ public class App  {
         Optional<Estudiante> estudiante = estudianteService.getById(carne);
         if(estudiante.isPresent()) {
             System.out.println("Estudiante: " + estudiante.get().getNombre() + " " + estudiante.get().getApellido());
-            System.out.println("Carne: " + estudiante.get().getCarne());
+            System.out.println("Carne: " + estudiante.get().getId());
         } else {
             System.out.println("Estudiante con carne: " + carne + " no existe");
         }
     }
 
-    public static void addNewStudent(EstudianteService estudianteService, int carne, String nombre, String apellido, int edad) {
-        var nuevoEstudiante = new Estudiante(carne,nombre, apellido, edad);
+    public static void addNewStudent(EstudianteService estudianteService, int id, String nombre, String apellido, String fechaNacimiento, int totalCreditos) {
+        var nuevoEstudiante = new Estudiante(id, nombre, apellido, fechaNacimiento, totalCreditos);
         estudianteService.addNew(nuevoEstudiante);
     }
 
@@ -373,8 +373,8 @@ public class App  {
         estudianteService.deleteStudent(carne);
     }
 
-    public static void updateStudent(EstudianteService estudianteService, int carne, String nombre, String apellido, int edad) {
-        var nuevoEstudiante = new Estudiante(carne,nombre, apellido, edad);
+    public static void updateStudent(EstudianteService estudianteService, int id, String nombre, String apellido, String fechaNacimiento, int totalCreditos) {
+        var nuevoEstudiante = new Estudiante(id, nombre, apellido, fechaNacimiento, totalCreditos);
         estudianteService.updateStudent(nuevoEstudiante);
     }
 
@@ -386,7 +386,7 @@ public class App  {
         System.out.println("ID\t\tNombre\t\tApellido\t\tEdad");
         System.out.println("-----------------------------------------------------------------------");
         for(Estudiante estudiante : estudiantes) {
-            System.out.println(estudiante.getCarne() + "\t\t" + estudiante.getNombre() + "\t\t" +estudiante.getApellido() + "\t\t"+ estudiante.getEdad());
+            System.out.println(estudiante.getId() + "\t\t" + estudiante.getNombre() + "\t\t" +estudiante.getApellido());
         }
         System.out.println("-----------------------------------------------------------------------");
         System.out.println("\n\n");
@@ -397,10 +397,10 @@ public class App  {
         System.out.println("\n\n");
         System.out.println("Lista de Estudiantes");
         System.out.println("-----------------------------------------------------------------------");
-        System.out.println("ID\t\tNombre\t\tApellido\t\tEdad");
+        System.out.println("ID\t\tNombre\t\tApellido");
         System.out.println("-----------------------------------------------------------------------");
         for(Estudiante estudiante : estudiantes) {
-            System.out.println(estudiante.getCarne() + "\t\t" + estudiante.getNombre() + "\t\t" +estudiante.getApellido() + "\t\t"+ estudiante.getEdad());
+            System.out.println(estudiante.getId() + "\t\t" + estudiante.getNombre() + "\t\t" +estudiante.getApellido());
         }
         System.out.println("-----------------------------------------------------------------------");
         System.out.println("\n\n");
@@ -465,7 +465,6 @@ public class App  {
     /*------------------------------------------------------------------------
      *-x-o-x-o-x-o-x-o-x-o-> FUNCIONES PARA PROFESORES <-o-x-o-x-o-x-o-x-o-x-*
      *------------------------------------------------------------------------*/
-
 
     public static void showAllProffesors(ProfesorService profesorService) {
 

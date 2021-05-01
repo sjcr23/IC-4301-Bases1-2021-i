@@ -1,6 +1,7 @@
-package tec.bd.app.dao;
+package tec.bd.app.dao.set;
 
 
+import tec.bd.app.dao.GenericDAO;
 import tec.bd.app.database.set.Row;
 import tec.bd.app.database.set.SetDB;
 

@@ -1,5 +1,6 @@
-package tec.bd.app.dao;
+package tec.bd.app.dao.set;
 
+import tec.bd.app.dao.EstudianteDAO;
 import tec.bd.app.database.set.Row;
 import tec.bd.app.database.set.RowAttribute;
 import tec.bd.app.database.set.SetDB;
@@ -52,21 +53,23 @@ public class EstudianteDAOImpl extends GenericSetDAOImpl<Estudiante, Integer> im
     @Override
     protected Estudiante rowToEntity(Row row) {
         // conversiones de Row a Estudiante
-        var carne = row.intAttributeValue("id");
+        var id = row.intAttributeValue("id");
         var nombre = row.stringAttributeValue("nombre");
         var apellido = row.stringAttributeValue("apellido");
-        var edad = row.intAttributeValue("edad");
-        return new Estudiante(carne, nombre, apellido, edad);
+        var fechaNacimiento = row.stringAttributeValue("fecha_nacimiento");
+        var creditos = row.intAttributeValue("total_creditos");
+        return new Estudiante(id, nombre, apellido, fechaNacimiento, creditos);
     }
 
     @Override
     protected Row entityToRow(Estudiante e) {
         // conversiones de Estudiante a Row
         return new Row(new RowAttribute[] {
-                new RowAttribute("id", e.getCarne()),
+                new RowAttribute("id", e.getId()),
                 new RowAttribute("nombre", e.getNombre()),
                 new RowAttribute("apellido", e.getApellido()),
-                new RowAttribute("edad", e.getEdad())
+                new RowAttribute("fecha_nacimiento", e.getFechaNacimiento()),
+                new RowAttribute("total_creditos", e.getTotalCreditos()),
         });
     }
 }

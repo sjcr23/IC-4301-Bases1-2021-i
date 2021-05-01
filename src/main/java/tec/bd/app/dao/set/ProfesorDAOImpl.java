@@ -1,5 +1,6 @@
-package tec.bd.app.dao;
+package tec.bd.app.dao.set;
 
+import tec.bd.app.dao.ProfesorDAO;
 import tec.bd.app.database.set.Row;
 import tec.bd.app.database.set.RowAttribute;
 import tec.bd.app.database.set.SetDB;
@@ -11,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ProfesorDAOImpl  extends  GenericSetDAOImpl<Profesor, Integer> implements  ProfesorDAO{
+public class ProfesorDAOImpl  extends  GenericSetDAOImpl<Profesor, Integer> implements ProfesorDAO {
 
     public ProfesorDAOImpl(SetDB setDB, Class<Profesor> clazz) {
         super(setDB, clazz);
