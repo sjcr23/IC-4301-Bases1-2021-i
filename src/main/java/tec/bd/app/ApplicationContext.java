@@ -37,7 +37,7 @@ public class ApplicationContext {
     private ProfesorService profesorService;
 
     private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/universidad";
-    private static final String DB_USERNAME = "root";
+    private static final String DB_USERNAME = "chino";
     private static final String DB_PASSWORD = "chino";
     private static final DBProperties DB_PROPERTIES = new DBProperties(CONNECTION_STRING, DB_USERNAME, DB_PASSWORD);
 

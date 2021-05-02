@@ -22,7 +22,7 @@ public class CursoMySqlDAOImpl extends GenericMySqlDAOImpl<Curso, Integer> imple
 
     private final DBProperties dbProperties;
 
-    private static final String SQL_SELECT_CURSOS = "select id, nombre, creditos, departamento;";
+    private static final String SQL_SELECT_CURSOS = "select id, nombre, creditos, departamento from curso;";
     private static final String SQL_SELECT_CURSO_ID = "select id, nombre, creditos, departamento from curso where id = %d";
     private static final String SQL_INSERT_CURSO = "insert into curso(id, nombre, creditos, departamento) values(%d, '%s', %d, '%s')";
     private static final String SQL_UPDATE_CURSO = "update curso set nombre = '%s', creditos = %d, departamento = '%s' where id = %d";

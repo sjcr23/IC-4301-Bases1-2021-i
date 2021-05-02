@@ -7,10 +7,6 @@ public class Curso implements Entity {
     private int creditos;
     private String departamento;
 
-    public int getId() {
-        return id;
-    }
-
     public Curso(int id, String nombre, int creditos, String departamento) {
         this.id = id;
         this.nombre = nombre;
@@ -18,6 +14,9 @@ public class Curso implements Entity {
         this.departamento = departamento;
     }
 
+    public int getId() {
+        return id;
+    }
     public void setId(int id) {
         this.id = id;
     }

@@ -2,12 +2,8 @@ package tec.bd.app.dao.mysql;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tec.bd.app.dao.CursoDAO;
-import tec.bd.app.dao.EstudianteDAO;
 import tec.bd.app.dao.ProfesorDAO;
 import tec.bd.app.database.mysql.DBProperties;
-import tec.bd.app.domain.Curso;
-import tec.bd.app.domain.Estudiante;
 import tec.bd.app.domain.Profesor;
 
 import java.sql.Connection;
@@ -25,7 +21,7 @@ public class ProfesorMySqlDAOImpl extends GenericMySqlDAOImpl<Profesor, Integer>
 
     private final DBProperties dbProperties;
 
-    private static final String SQL_SELECT_PROFESORES = "select id, nombre, apellido, ciudad;";
+    private static final String SQL_SELECT_PROFESORES = "select id, nombre, apellido, ciudad from profesor;";
     private static final String SQL_SELECT_PROFESOR_ID = "select id, nombre, apellido, ciudad from profesor where id = %d";
     private static final String SQL_INSERT_PROFESOR = "insert into profesor(id, nombre, apellido, ciudad) values(%d, '%s', '%s', '%s')";
     private static final String SQL_UPDATE_PROFESOR = "update profesor set nombre = '%s', apellido = '%s', ciudad = '%s' where id = %d";
