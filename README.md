@@ -1,6 +1,8 @@
 [IS2021][BASES-1][Mi-TEC-Digital][Tarea2]
 ==========================================
 
+[![Java CI with Maven](https://github.com/sjcr23/mi-tec-digital/actions/workflows/maven.yml/badge.svg)](https://github.com/sjcr23/mi-tec-digital/actions/workflows/maven.yml)
+
 **Descripción:**  
   · Aplicación Demo para gestionar *Estudiantes,* utilizando   
      por atributos el ```carnét, nombre, apellido y edad.``` 
