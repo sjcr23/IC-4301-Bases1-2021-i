@@ -15,7 +15,7 @@ create table estudiante(
 	id int primary key,
     nombre varchar(30),
     apellido varchar(30),
-    fecha_nacimiento DATE,
+    fecha_nacimiento VARCHAR(30),
     total_creditos int check (total_creditos > 0)
 );
 

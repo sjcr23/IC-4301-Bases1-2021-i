@@ -105,10 +105,10 @@ public class ProfesorMySqlDAOImpl extends GenericMySqlDAOImpl<Profesor, Integer>
                 try (Statement stmt = connection.createStatement()) {
                     //execute query
                     var sql = String.format(SQL_UPDATE_PROFESOR,
-                            profesor.getId(),
                             profesor.getNombre(),
                             profesor.getApellido(),
-                            profesor.getCiudad()
+                            profesor.getCiudad(),
+                            profesor.getId()
                     );
                     LOG.info(sql);
                     int rowCount = stmt.executeUpdate(sql);

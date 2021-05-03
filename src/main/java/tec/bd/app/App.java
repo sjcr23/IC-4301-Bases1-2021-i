@@ -37,7 +37,7 @@ public class App  {
         options.addOption(Option.builder("ec")
                 .longOpt("estudiante-nuevo")
                 .hasArg(true)
-                .numberOfArgs(4)
+                .numberOfArgs(5)
                 .desc("Agregar Estudiante: carne, nombre y apellido son requeridos")
                 .required(false)
                 .build());
@@ -57,7 +57,7 @@ public class App  {
 
         options.addOption(Option.builder("eu")
                 .longOpt("estudiante-actualizar")
-                .numberOfArgs(4)
+                .numberOfArgs(5)
                 .desc("Actualizar estudiante: carne, nombre y apellido son requeridos")
                 .required(false)
                 .build());

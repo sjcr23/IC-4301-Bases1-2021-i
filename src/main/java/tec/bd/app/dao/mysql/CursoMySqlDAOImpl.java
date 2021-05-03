@@ -105,10 +105,10 @@ public class CursoMySqlDAOImpl extends GenericMySqlDAOImpl<Curso, Integer> imple
                 try (Statement stmt = connection.createStatement()) {
                     //execute query
                     var sql = String.format(SQL_UPDATE_CURSO,
-                            curso.getId(),
                             curso.getNombre(),
                             curso.getCreditos(),
-                            curso.getDepartamento()
+                            curso.getDepartamento(),
+                            curso.getId()
                     );
                     LOG.info(sql);
                     int rowCount = stmt.executeUpdate(sql);
