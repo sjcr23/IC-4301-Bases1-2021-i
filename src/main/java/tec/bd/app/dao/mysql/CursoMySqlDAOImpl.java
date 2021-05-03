@@ -47,7 +47,6 @@ public class CursoMySqlDAOImpl extends GenericMySqlDAOImpl<Curso, Integer> imple
                     try (ResultSet rs = stmt.executeQuery(SQL_SELECT_CURSOS)) {
                         return this.resultSetToList(rs);
                     }
-
                 }
             }
         } catch (SQLException e) {
