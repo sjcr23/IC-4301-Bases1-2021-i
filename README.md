@@ -28,3 +28,10 @@ Nota: 9.5. El código se ve bien y todo corre.
 Nota 8.5
 
 Las pruebas unitarias reportaron muchos errores.
+
+## Nota tarea 4
+
+Nota 6
+
+- Hay métodos en los DAOs que no se implementaron
+- Las pruebas unitarias reportaron muchos errores
