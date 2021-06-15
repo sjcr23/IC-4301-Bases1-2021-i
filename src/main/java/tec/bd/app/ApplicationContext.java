@@ -1,11 +1,10 @@
 package tec.bd.app;
 
-import tec.bd.app.dao.CursoDAO;
-import tec.bd.app.dao.EstudianteDAO;
-import tec.bd.app.dao.ProfesorDAO;
-import tec.bd.app.dao.mysql.CursoMySqlDAOImpl;
-import tec.bd.app.dao.mysql.EstudianteMySqlDAOImpl;
-import tec.bd.app.dao.mysql.ProfesorMySqlDAOImpl;
+import tec.bd.app.dao.*;
+import tec.bd.app.dao.mysql.routine.CursoMySqlDAOImpl;
+import tec.bd.app.dao.mysql.routine.EstudianteMySqlDAOImpl;
+import tec.bd.app.dao.mysql.routine.ProfesorMySqlDAOImpl;
+
 import tec.bd.app.database.mysql.DBProperties;
 import tec.bd.app.database.set.Row;
 import tec.bd.app.database.set.RowAttribute;
@@ -27,6 +26,7 @@ import java.util.Set;
 public class ApplicationContext {
 
     private SetDB setDB;
+
     private EstudianteDAO estudianteDAO;
     private EstudianteService estudianteService;
 
@@ -53,17 +53,19 @@ public class ApplicationContext {
     public static ApplicationContext init() {
         ApplicationContext applicationContext = new ApplicationContext();
 
-        // Objetos que se conectan a MySQL
         String dbPropertiesFilePath = applicationContext.getClass().getResource(DATABASE_PROPERTIES_FILE).getFile();
         DBProperties databaseProperties = initDBProperties(dbPropertiesFilePath);
 
-        applicationContext.estudianteDAO = initEstudianteMysqlDAO(databaseProperties);
+
+        // Objetos que se conectan a MySQL
         applicationContext.cursoDAO = initCursoMysqlDAO(databaseProperties);
+        applicationContext.estudianteDAO = initEstudianteMysqlDAO(databaseProperties);
         applicationContext.profesorDAO = initProfesorMysqlDAO(databaseProperties);
 
-        applicationContext.estudianteService = initEstudianteService(applicationContext.estudianteDAO);
         applicationContext.cursoService = initCursoService(applicationContext.cursoDAO);
+        applicationContext.estudianteService = initEstudianteService(applicationContext.estudianteDAO);
         applicationContext.profesorService = initProfesorService(applicationContext.profesorDAO);
+
         return applicationContext;
     }
 
@@ -122,11 +124,7 @@ public class ApplicationContext {
         var fundaDepartamento = new RowAttribute("departamento", "EscuelaDeCompu");
         var fundaRow = new Row(new RowAttribute[]{ fundaID, fundaNombre, fundaCreditos, fundaDepartamento });
 
-
-
-        // ---------------------------------------------------------------
         // Registros de la tabla profesor
-        // ---------------------------------------------------------------
 
         var profe1Id = new RowAttribute("id", 1);
         var profe1Nombre = new RowAttribute("nombre", "Aurelio");
@@ -213,6 +211,7 @@ public class ApplicationContext {
         return new ProfesorMySqlDAOImpl(dbProperties);
     }
 
+
     //   Servicios
 
     private static EstudianteService initEstudianteService(EstudianteDAO estudianteDAO) {
@@ -256,4 +255,5 @@ public class ApplicationContext {
     public ProfesorService getProfesorService() {
         return this.profesorService;
     }
+
 }

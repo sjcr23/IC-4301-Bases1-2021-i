@@ -18,9 +18,12 @@ public class App  {
     public static void main(String[] args) throws Exception {
 
         ApplicationContext applicationContext = ApplicationContext.init();
+
+        // Servicios
         var estudianteService = applicationContext.getEstudianteService();
         var cursoService = applicationContext.getCursoService();
         var profesorService = applicationContext.getProfesorService();
+
 
         Options options = new Options();
 

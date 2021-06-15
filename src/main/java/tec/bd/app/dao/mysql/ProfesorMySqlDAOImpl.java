@@ -2,10 +2,13 @@ package tec.bd.app.dao.mysql;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tec.bd.app.dao.GenericDAO;
 import tec.bd.app.dao.ProfesorDAO;
 import tec.bd.app.database.mysql.DBProperties;
+import tec.bd.app.domain.Entity;
 import tec.bd.app.domain.Profesor;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
