@@ -43,4 +43,4 @@ Nota 6
 - hay pruebas unitarias viejas que no se arreglaron
 
 
-Nota: 9.5
+Nota: 9.2
