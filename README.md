@@ -35,3 +35,12 @@ Nota 6
 
 - Hay métodos en los DAOs que no se implementaron
 - Las pruebas unitarias reportaron muchos errores
+
+## Nota proyecto-2
+
+- le faltó la instrucción de create database en dump de mysql
+- la actualización de estudiante no se hizo como se solicitó
+- hay pruebas unitarias viejas que no se arreglaron
+
+
+Nota: 9.5
