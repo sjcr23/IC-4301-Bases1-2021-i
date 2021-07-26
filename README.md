@@ -1,4 +1,5 @@
-[IS2021][BASES-1][Mi-TEC-Digital][Tarea1]
+IS2021 Bases de Datos 1  
+Repositorio del curso
 ==========================================
 
 **Descripción:**  
